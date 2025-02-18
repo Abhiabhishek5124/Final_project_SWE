@@ -1,0 +1,7 @@
+/* src/App.css */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Remove all other existing styles - they conflict with Tailwind */
