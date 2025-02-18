@@ -1,11 +1,22 @@
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import './index.css'
 
 export default function App() {
+  const navigate = useNavigate();
+
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center px-6 md:px-12">
       {/* Background Cover */}
       <div className="fixed inset-0 bg-black"></div>
+
+      {/* User Button (Top-right corner when signed in) */}
+      <SignedIn>
+        <div className="fixed top-4 right-4">
+          <UserButton afterSignOutUrl="/" />
+        </div>
+      </SignedIn>
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto flex flex-col md:flex-row items-center justify-between w-full h-full">
@@ -17,27 +28,31 @@ export default function App() {
           transition={{ duration: 0.8 }}
           className="text-center md:text-left max-w-2xl space-y-6"
         >
-          <h1 className="bg-gradient-to-r from-gray-300 to-white bg-clip-text text-4xl font-bold leading-tight text-transparent md:text-6xl">
+          <h1 className="bg-gradient-to-r from-gray-300 to-white bg-clip-text text-4xl font-bold leading-tight md:text-6xl">
             Welcome to NutriByte
           </h1>
           <p className="text-lg text-gray-300 md:text-xl">
-          Take control of your nutrition and achieve your health 
-          goals with Nutrition Planner—your all-in-one solution for smarter meal 
-          planning and healthier living. Whether you're tracking calories, optimizing macros, 
-          or building balanced meal plans, our app provides the tools you need to stay on track effortlessly.
+            Take control of your nutrition and achieve your health 
+            goals with Nutrition Planner—your all-in-one solution for smarter meal 
+            planning and healthier living.
           </p>
 
-          {/* Sign In Button */}
+          {/* Authentication Buttons */}
           <SignedOut>
             <SignInButton>
-              <button className="rounded-lg border border-white px-8 py-3 font-semibold text-white transition-all hover:bg-red-500 hover:text-red">
+              <button className="rounded-lg border border-white px-8 py-3 font-semibold text-black transition-all hover:bg-red-500 hover:text-red">
                 Sign In
               </button>
             </SignInButton>
           </SignedOut>
 
           <SignedIn>
-            <UserButton afterSignOutUrl="/" />
+            <button 
+              onClick={() => navigate("/juices")} 
+              className="mt-4 rounded-lg border border-white px-8 py-3 font-semibold text-black transition-all hover:bg-green-500 hover:text-black"
+            >
+              Lets get Started!
+            </button>
           </SignedIn>
         </motion.div>
 
