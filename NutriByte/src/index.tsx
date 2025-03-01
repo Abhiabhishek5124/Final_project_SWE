@@ -8,7 +8,8 @@ export default function Home() {
   return (
     <div className="h-screen w-full bg-black flex flex-col">
       <Header />
-      <main className="flex flex-col items-center justify-center flex-1">
+      <main className="flex flex-col items-center justify-center h-full w-full flex-grow">
+
         {/* Text content */}
         <TextContainer />
 
