@@ -9,7 +9,7 @@ export default function App() {
   const navigate = useNavigate()
 
   return (
-    <div className="relative h-screen w-full bg-gradient-to-br from-emerald-500 to-teal-700 overflow-hidden">
+    <div className="relative h-screen w-full bg-gradient-to-br from-gray-900 to-black p-6 overflow-hidden">
       {/* Background Cover */}
       <div className="absolute inset-0 z-0">
         <img
@@ -17,7 +17,7 @@ export default function App() {
           alt="Background"
           className="absolute inset-0 w-full h-full object-cover filter blur-[2px] opacity-30"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/70 to-teal-800/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black p-6"></div>
       </div>
 
       {/* User Button (Top-right corner when signed in) */}
@@ -105,7 +105,7 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-4 left-0 right-0 text-center text-emerald-100/60 text-sm z-10">
+      <div className="absolute bottom-4 left-0 right-0 text-center text-white text-sm z-10">
         © {new Date().getFullYear()} NutriByte. All rights reserved.
       </div>
     </div>
