@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<App />} /> {/* Landing Page */}
           <Route path="/query" element={<QueryPage />} /> {/* New Query Page */}
-          <Route path="/juices" element={<Home />} /> {/* Juice Display Page */}
+          <Route path="/main" element={<Home />} /> 
         </Routes>
       </Router>
     </ClerkProvider>

@@ -64,7 +64,7 @@ export default function App() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => navigate("/juices")}
+                onClick={() => navigate("/query")}
                 className="rounded-lg bg-emerald-500 px-8 py-3.5 font-semibold text-black shadow-lg transition-all hover:bg-emerald-600"
               >
                 Let's Get Started!
