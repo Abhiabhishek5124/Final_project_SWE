@@ -53,7 +53,7 @@ export default function App() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
-                  className="rounded-lg bg-white px-8 py-3.5 font-semibold text-emerald-800 shadow-lg transition-all hover:bg-emerald-100"
+                  className="rounded-lg bg-white px-8 py-3.5 font-semibold text-white shadow-lg transition-all hover:bg-emerald-100"
                 >
                   Sign In
                 </motion.button>
@@ -65,7 +65,7 @@ export default function App() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => navigate("/query")}
-                className="rounded-lg bg-emerald-500 px-8 py-3.5 font-semibold text-black shadow-lg transition-all hover:bg-emerald-600"
+                className="rounded-lg bg-emerald-500 px-8 py-3.5 font-semibold text-white shadow-lg transition-all hover:bg-emerald-600"
               >
                 Let's Get Started!
               </motion.button>

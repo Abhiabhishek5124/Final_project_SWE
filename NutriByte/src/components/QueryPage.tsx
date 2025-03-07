@@ -253,7 +253,7 @@ export default function QueryPage() {
                 <button
                   type="button"
                   onClick={handleBack}
-                  className="px-6 py-2.5 rounded-lg border border-zinc-700 text-black bg-white hover:bg-zinc-100 transition-colors"
+                  className="px-6 py-2.5 rounded-lg border border-zinc-700 text-white bg-black hover:bg-zinc-100 transition-colors"
                 >
                   Back
                 </button>
