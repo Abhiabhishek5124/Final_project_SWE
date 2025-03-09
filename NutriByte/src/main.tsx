@@ -8,7 +8,7 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Import your Publishable Key
-const PUBLISHABLE_KEY = import.meta.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 console.log("Publishable Key:", PUBLISHABLE_KEY); // Add this line to log the key
 
