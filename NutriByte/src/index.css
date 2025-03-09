@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: block;
+  flex-direction: column;
+  place-items: center;
+  background-color: #1a1a1a;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  color: white;
+}
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Ensures no unwanted scrolling */
+}
+
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-serif; /* Use font-serif or another valid font family */
+  }
+}
+
+@layer components {
+  /* Header */
+  .header {
+    @apply h-[10vh] flex items-center px-10 py-4 md:px-20 text-lg justify-between;
+  }
+  .header-logo {
+    @apply font-bold md:text-2xl; /* Changed font-black to font-bold for valid font weight */
+  }
+  .header-account {
+    @apply hidden font-medium md:block;
+  }
+  .header-user {
+    @apply block md:hidden;
+  }
+  .header > ul {
+    @apply justify-center flex-1 hidden space-x-5 md:flex;
+  }
+
+  main {
+    @apply relative h-[90vh];
+  }
+
+  /* Text container */
+  .textContainer {
+    @apply flex flex-col h-full px-2 py-28 md:px-52;
+  }
+  .textContainer-top {
+    @apply flex items-center justify-between text-lg md:text-2xl;
+  }
+  .textContainer-middle {
+    @apply grid flex-1 place-items-center;
+  }
+  .textContainer-middle > span {
+    @apply text-5xl font-bold tracking-wider md:text-9xl; /* Changed font-black to font-bold */
+  }
+  .textContainer-bottom {
+    @apply flex items-center justify-between;
+  }
+  .textContainer-bottom > button {
+    @apply p-2 text-base tracking-wide text-white lowercase bg-gray-900 rounded-lg md:px-6 md:py-3 md:text-lg;
+  }
+  .textContainer-bottom > p {
+    @apply text-sm font-semibold md:text-2xl;
+  }
+  .textContainer-bottom > p > span {
+    @apply text-green-600;
+  }
+
+  /* Bottle */
+  .bottleWrapper {
+    @apply absolute top-0 left-0 grid w-full text-center place-items-center;
+  }
+  .bottle {
+    @apply h-[400px] w-[250px] md:h-[550px] md:w-[500px] object-contain;
+  }
+
+  /* Leaves */
+  .leafWrapper-1 {
+    @apply absolute top-52 left-[30%];
+  }
+  .leafWrapper-2 {
+    @apply absolute top-1/2 right-72;
+  }
+  .leafWrapper-3 {
+    @apply absolute top-10 right-[40%];
+  }
+  .leafWrapper-4 {
+    @apply absolute top-[36%] right-1/3;
+  }
+  .leafWrapper-5 {
+    @apply absolute top-[75%] left-1/4;
+  }
+  .leaf {
+    @apply object-contain w-20 h-28;
+  }
+}
