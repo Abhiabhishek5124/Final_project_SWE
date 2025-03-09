@@ -26,21 +26,26 @@ a:hover {
 
 body {
   margin: 0;
-  display: block;
+  display: flex;
   flex-direction: column;
-  place-items: center;
+  min-height: 100vh;
   background-color: #1a1a1a;
   font-family: 'Inter', sans-serif;
-  min-height: 100vh;
   color: white;
 }
+
 html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* Ensures no unwanted scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  scroll-behavior: smooth; /* Smooth scrolling for anchor links */
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+}
 
 h1 {
   font-size: 3.2em;
@@ -56,7 +61,7 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: border-color 0.25s, background-color 0.25s;
 }
 button:hover {
   border-color: #646cff;
@@ -85,56 +90,50 @@ button:focus-visible {
 
 @layer base {
   body {
-    @apply font-serif; /* Use font-serif or another valid font family */
+    @apply font-sans; /* Use sans-serif font for better readability */
   }
 }
 
 @layer components {
-  /* Header */
+  /* Header - Note: Most header styles now moved to the Header component */
   .header {
-    @apply h-[10vh] flex items-center px-10 py-4 md:px-20 text-lg justify-between;
+    @apply flex items-center px-4 py-4 md:px-8 text-lg justify-between;
   }
-  .header-logo {
-    @apply font-bold md:text-2xl; /* Changed font-black to font-bold for valid font weight */
-  }
-  .header-account {
-    @apply hidden font-medium md:block;
-  }
-  .header-user {
-    @apply block md:hidden;
-  }
-  .header > ul {
-    @apply justify-center flex-1 hidden space-x-5 md:flex;
-  }
-
+  
+  /* Main content spacing to account for fixed header */
   main {
-    @apply relative h-[90vh];
+    @apply pt-16; /* Add padding-top to account for fixed header */
   }
 
   /* Text container */
   .textContainer {
-    @apply flex flex-col h-full px-2 py-28 md:px-52;
+    @apply flex flex-col h-full px-4 py-16 md:py-24 md:px-8 lg:px-16;
   }
   .textContainer-top {
-    @apply flex items-center justify-between text-lg md:text-2xl;
+    @apply flex items-center justify-between text-base md:text-lg lg:text-2xl;
   }
   .textContainer-middle {
     @apply grid flex-1 place-items-center;
   }
   .textContainer-middle > span {
-    @apply text-5xl font-bold tracking-wider md:text-9xl; /* Changed font-black to font-bold */
+    @apply text-4xl md:text-5xl lg:text-7xl font-bold tracking-wider;
   }
   .textContainer-bottom {
-    @apply flex items-center justify-between;
+    @apply flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0;
   }
   .textContainer-bottom > button {
-    @apply p-2 text-base tracking-wide text-white lowercase bg-gray-900 rounded-lg md:px-6 md:py-3 md:text-lg;
+    @apply p-2 text-sm md:text-base tracking-wide text-white bg-gray-900 rounded-lg md:px-6 md:py-3;
   }
   .textContainer-bottom > p {
-    @apply text-sm font-semibold md:text-2xl;
+    @apply text-sm md:text-base lg:text-xl font-semibold;
   }
   .textContainer-bottom > p > span {
-    @apply text-green-600;
+    @apply text-emerald-500;
+  }
+
+  /* Responsive containers */
+  .responsive-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full;
   }
 
   /* Bottle */
@@ -163,5 +162,12 @@ button:focus-visible {
   }
   .leaf {
     @apply object-contain w-20 h-28;
+  }
+}
+
+/* Fix for mobile scrolling and touch */
+@media (max-width: 768px) {
+  body {
+    -webkit-overflow-scrolling: touch;
   }
 }
