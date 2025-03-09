@@ -1,17 +1,19 @@
-import React from "react"
-import ReactDOM from "react-dom/client"
-import App from "./App.tsx"
-import Home from "./index.tsx" // Juice Page
-import QueryPage from "./components/queryPage.tsx" // Import QueryPage
-import "./index.css"
-import { ClerkProvider } from "@clerk/clerk-react"
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import Home from "./index.tsx"; // Juice Page
+import QueryPage from "./components/QueryPage.tsx"; // Import QueryPage
+import "./index.css";
+import { ClerkProvider } from "@clerk/clerk-react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 // Import your Publishable Key
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+const PUBLISHABLE_KEY = import.meta.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+console.log("Publishable Key:", PUBLISHABLE_KEY); // Add this line to log the key
 
 if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
+  throw new Error("Missing Publishable Key");
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -21,9 +23,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Routes>
           <Route path="/" element={<App />} /> {/* Landing Page */}
           <Route path="/query" element={<QueryPage />} /> {/* New Query Page */}
-          <Route path="/main" element={<Home />} /> 
+          <Route path="/main" element={<Home />} /> {/* Juice Page */}
         </Routes>
       </Router>
     </ClerkProvider>
   </React.StrictMode>
-)
+);
+
