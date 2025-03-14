@@ -9,6 +9,7 @@ import { ArrowRight, Check } from "lucide-react"
 
 // Define the form data structure
 type FormData = {
+  name: string
   age: string
   weight: string
   height: string
@@ -21,6 +22,7 @@ export default function QueryPage() {
   const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState<FormData>({
+    name: "",
     age: "",
     weight: "",
     height: "",
@@ -54,8 +56,7 @@ export default function QueryPage() {
     if (currentStep < totalSteps) {
       setCurrentStep((prev) => prev + 1)
     } else {
-      // Submit form and navigate to juices page
-      // In a real app, you would save this data to a database
+      // Submit form and navigate to the index page
       console.log("Form submitted:", formData)
       navigate("/main")
     }
@@ -70,7 +71,7 @@ export default function QueryPage() {
   // Validate if current step is complete
   const isStepComplete = () => {
     if (currentStep === 1) {
-      return formData.age && formData.weight && formData.height
+      return formData.name && formData.age && formData.weight && formData.height
     } else if (currentStep === 2) {
       return formData.goal && formData.activityLevel
     }
@@ -78,7 +79,7 @@ export default function QueryPage() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-black flex flex-col items-center justify-center p-4 md:p-8 overflow-auto">
+    <div className="min-h-screen w-screen bg-black flex flex-col items-center justify-center p-4 md:p-8 overflow-auto">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -89,7 +90,7 @@ export default function QueryPage() {
           <motion.div
             initial={{ width: `${((currentStep - 1) / totalSteps) * 100}%` }}
             animate={{ width: `${(currentStep / totalSteps) * 100}%` }}
-            className="h-full bg-purple-600"
+            className="h-full bg-green-600"
           ></motion.div>
         </div>
 
@@ -110,6 +111,22 @@ export default function QueryPage() {
                 className="space-y-4"
               >
                 <div>
+                  <label htmlFor="name" className="block text-zinc-300 mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    placeholder="Enter your name"
+                    required
+                  />
+                </div>
+
+                <div>
                   <label htmlFor="age" className="block text-zinc-300 mb-2">
                     Age
                   </label>
@@ -119,7 +136,7 @@ export default function QueryPage() {
                     name="age"
                     value={formData.age}
                     onChange={handleInputChange}
-                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="Enter your age"
                     required
                   />
@@ -135,7 +152,7 @@ export default function QueryPage() {
                     name="weight"
                     value={formData.weight}
                     onChange={handleInputChange}
-                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="Enter your weight in kg"
                     required
                   />
@@ -151,7 +168,7 @@ export default function QueryPage() {
                     name="height"
                     value={formData.height}
                     onChange={handleInputChange}
-                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                     placeholder="Enter your height in cm"
                     required
                   />
@@ -176,7 +193,7 @@ export default function QueryPage() {
                     name="goal"
                     value={formData.goal}
                     onChange={handleInputChange}
-                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
                   >
                     <option value="weight-loss">Weight Loss</option>
@@ -196,7 +213,7 @@ export default function QueryPage() {
                     name="activityLevel"
                     value={formData.activityLevel}
                     onChange={handleInputChange}
-                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full p-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
                   >
                     <option value="sedentary">Sedentary (little or no exercise)</option>
@@ -229,7 +246,7 @@ export default function QueryPage() {
                           value={restriction}
                           checked={formData.dietaryRestrictions.includes(restriction)}
                           onChange={handleCheckboxChange}
-                          className="h-5 w-5 rounded border-zinc-700 text-purple-500 focus:ring-purple-500 bg-zinc-800"
+                          className="h-5 w-5 rounded border-zinc-700 text-green-500 focus:ring-green-500 bg-zinc-800"
                         />
                         <label htmlFor={restriction} className="ml-2 text-zinc-300 capitalize">
                           {restriction.replace("-", " ")}
@@ -287,12 +304,12 @@ export default function QueryPage() {
 
       {/* Decorative elements */}
       <motion.div
-        className="fixed top-[10%] right-[10%] w-32 h-32 rounded-full bg-purple-900/10 backdrop-blur-md z-0"
+        className="fixed top-[10%] right-[10%] w-32 h-32 rounded-full bg-green-900/10 backdrop-blur-md z-0"
         animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
         transition={{ repeat: Number.POSITIVE_INFINITY, duration: 6, ease: "easeInOut" }}
       />
       <motion.div
-        className="fixed bottom-[10%] left-[10%] w-24 h-24 rounded-full bg-purple-900/10 backdrop-blur-md z-0"
+        className="fixed bottom-[10%] left-[10%] w-24 h-24 rounded-full bg-green-900/10 backdrop-blur-md z-0"
         animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
         transition={{ repeat: Number.POSITIVE_INFINITY, duration: 5, ease: "easeInOut", delay: 1 }}
       />
