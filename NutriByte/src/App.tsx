@@ -1,114 +1,87 @@
-"use client"
+"use client";
 
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react"
-import { motion } from "framer-motion"
-import { useNavigate } from "react-router-dom"
-import "./index.css"
-
+import { SignedIn, SignedOut, SignInButton, UserButton, useAuth } from "@clerk/clerk-react";
+import Leaf from "./components/Leaf";
+import TextContainer from "./components/TextContainer";
+import { motion } from "framer-motion";
+import { bottle, bottleWrapper, leavesContainer } from "./utils/variants";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import "./index.css";
+import axios from "axios";
 export default function App() {
-  const navigate = useNavigate()
+  const [users, setUsers] = useState([]);
+  const fetchAllUsers = async () =>{
+    try{
+      const response = await axios.get("http://localhost:8080/users/getAllUsers");
+      console.table(response.data); 
+      setUsers(response.data.result);
+    }catch(error){
+      console.error("Error fetching users:", error);
+    }
+  }
+
+  // const updateUserProfile = async axios.post()
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, []);
+
+  const navigate = useNavigate();
+  const { isSignedIn } = useAuth();
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    console.log("URL Parameters:", params.toString());
+
+    // If the user just signed in
+    if (params.get("createdSession") === "true" || isSignedIn) {
+      navigate("/query"); // Redirect to QueryPage
+    }
+  }, [navigate, isSignedIn]);
 
   return (
-    <div className="relative h-screen w-full bg-gradient-to-br from-gray-900 to-black p-6 overflow-hidden">
-      {/* Background Cover */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1557683316-973673baf926"
-          alt="Background"
-          className="absolute inset-0 w-full h-full object-cover filter blur-[2px] opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-black p-6"></div>
-      </div>
-
-      {/* User Button (Top-right corner when signed in) */}
-      <SignedIn>
-        <div className="fixed top-6 right-6 z-50">
+    <div className="h-screen w-screen bg-black flex flex-col overflow-hidden">
+      {/* Header with authentication */}
+      <header className="w-full p-4 flex justify-end items-center">
+        <SignedIn>
           <UserButton afterSignOutUrl="/" />
-        </div>
-      </SignedIn>
-
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between w-full h-full px-6 md:px-16 py-12">
-        {/* Text Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center md:text-left max-w-2xl space-y-8 md:pr-8"
-        >
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight text-white">
-            Welcome to{" "}
-            <span className="bg-gradient-to-r from-white to-emerald-200 bg-clip-text text-transparent">NutriByte</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-emerald-50/90 leading-relaxed">
-            Take control of your nutrition and achieve your health goals with Nutrition Planner—your all-in-one solution
-            for smarter meal planning and healthier living.
-          </p>
-
-          {/* Authentication Buttons */}
-          <div className="pt-4">
-            <SignedOut>
-              <SignInButton>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="rounded-lg bg-white px-8 py-3.5 font-semibold text-white shadow-lg transition-all hover:bg-emerald-100"
-                >
-                  Sign In
-                </motion.button>
-              </SignInButton>
-            </SignedOut>
-
-            <SignedIn>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => navigate("/query")}
-                className="rounded-lg bg-emerald-500 px-8 py-3.5 font-semibold text-white shadow-lg transition-all hover:bg-emerald-600"
-              >
-                Let's Get Started!
-              </motion.button>
-            </SignedIn>
-          </div>
-        </motion.div>
-
-        {/* Image Section */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative max-w-2xl w-full mt-12 md:mt-0"
-        >
-          <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-r from-emerald-200 to-teal-300 blur-lg opacity-30"></div>
-          <div className="relative rounded-3xl border-8 border-emerald-900/30 shadow-2xl overflow-hidden">
-            <img
-              src="https://png.pngtree.com/background/20240124/original/pngtree-dumbbellsfresh-food-and-measure-tape-figure-muscle-fit-photo-picture-image_7418892.jpg"
-              alt="App Preview"
-              className="w-full h-auto"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/40 to-transparent"></div>
-          </div>
-
-          {/* Floating elements for visual interest */}
-          <motion.div
-            className="absolute -top-6 -right-6 w-20 h-20 rounded-full bg-emerald-300/20 backdrop-blur-md"
-            animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
-            transition={{ repeat: Number.POSITIVE_INFINITY, duration: 5, ease: "easeInOut" }}
+        </SignedIn>
+        <SignedOut>
+          <SignInButton
+            mode="modal"
+            style={{
+              backgroundColor: "green",
+              color: "white",
+              padding: "0.5rem 1rem",
+              borderRadius: "0.25rem",
+              transition: "background-color 0.3s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "black")}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "green")}
           />
-          <motion.div
-            className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-teal-300/20 backdrop-blur-md"
-            animate={{ y: [0, 10, 0], rotate: [0, -5, 0] }}
-            transition={{ repeat: Number.POSITIVE_INFINITY, duration: 4, ease: "easeInOut", delay: 1 }}
+        </SignedOut>
+      </header>
+
+      <main className="flex flex-col items-center justify-center h-full w-full flex-grow relative">
+        <TextContainer />
+
+        <motion.div variants={bottleWrapper} initial="initial" animate="animate" className="bottleWrapper max-w-full">
+          <motion.img 
+            src="/images/diet.png" 
+            variants={bottle} 
+            className="bottle w-full max-w-[500px] h-auto mx-auto md:w-[400px] lg:w-[500px]" 
           />
         </motion.div>
-      </div>
 
-      {/* Footer */}
-      <div className="absolute bottom-4 left-0 right-0 text-center text-white text-sm z-10">
-        © {new Date().getFullYear()} NutriByte. All rights reserved.
-      </div>
+        <motion.div variants={leavesContainer} initial="initial" animate="animate" className="absolute inset-0 pointer-events-none">
+          <Leaf animationSpeed={1.8} className="leafWrapper-1" imageUrl="images/leaf01.png" />
+          <Leaf animationSpeed={1.6} className="leafWrapper-2" imageUrl="images/leaf02.png" />
+          <Leaf animationSpeed={1.5} className="leafWrapper-3" imageUrl="images/leaf03.png" />
+          <Leaf animationSpeed={1.7} className="leafWrapper-4" imageUrl="images/leaf04.png" />
+          <Leaf animationSpeed={1.8} className="leafWrapper-5" imageUrl="images/leaf05.png" />
+        </motion.div>
+      </main>
     </div>
-  )
+  );
 }
-

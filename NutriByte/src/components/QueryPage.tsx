@@ -2,11 +2,14 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { ArrowRight, Check } from "lucide-react"
-
+import axios from "axios"
+import Cookies from "js-cookie"
+import { useAuth } from "@clerk/clerk-react"
+import { getAndStoreClerkToken, sendUserDataToBackend } from "../utils/auth"
 // Define the form data structure
 type FormData = {
   age: string
@@ -28,6 +31,17 @@ export default function QueryPage() {
     activityLevel: "moderate",
     dietaryRestrictions: [],
   })
+  const { isSignedIn, userId } = useAuth()
+
+  // Check if user is authenticated
+  useEffect(() => {
+    if (!isSignedIn) {
+      navigate("/")
+    } else {
+      // Get and store the Clerk JWT token when component mounts
+      getAndStoreClerkToken()
+    }
+  }, [isSignedIn, navigate])
 
   const totalSteps = 3
 
@@ -55,9 +69,7 @@ export default function QueryPage() {
       setCurrentStep((prev) => prev + 1)
     } else {
       // Submit form and navigate to juices page
-      // In a real app, you would save this data to a database
-      console.log("Form submitted:", formData)
-      navigate("/main")
+      sendUserData()
     }
   }
 
@@ -75,6 +87,26 @@ export default function QueryPage() {
       return formData.goal && formData.activityLevel
     }
     return true // Step 3 is optional
+  }
+
+  const sendUserData = async () => {
+    try {
+      // Add the userId to the form data
+      const userData = {
+        ...formData,
+        userId: userId, // Add the Clerk user ID
+      }
+      
+      // Use our utility function to send data to backend
+      const response = await sendUserDataToBackend(userData)
+      console.log("Profile created:", response)
+      
+      // Navigate to main page after successful profile creation
+      navigate("/main")
+    } catch (error) {
+      console.error("Error creating profile:", error)
+      // You might want to show an error message to the user here
+    }
   }
 
   return (
